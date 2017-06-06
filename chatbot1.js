@@ -6,5 +6,13 @@ app.command('start', ({ from, reply }) => {
   return reply('Welcome! I\'m a bot')
 })
 app.hears('Hi', (ctx) => ctx.reply('Hi! How are you?'))
-app.hears('Fine' || 'Good' || 'Well', (ctx) => ctx.reply('👍'))
+app.hears('Good', (ctx) => ctx.reply('Cool'))
+app.on('sticker', (ctx) => ctx.reply('👍'))
+
+app.command('update', (ctx) => {
+  console.log('update :', ctx.telegram.Update)
+})
+
+app.use((ctx) => console.log('chat :', [ctx.me]))
+
 app.startPolling()
