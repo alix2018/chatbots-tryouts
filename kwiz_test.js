@@ -15,8 +15,11 @@ bot.use(Telegraf.memorySession())
 
 const quiz = new Kwiz(quizDefinition)
 var answer = new String()
+var result = new String()
+var id = new String()
 var question = 0
 var nbQ = 3
+loop = 1
 
 
 bot.command('start', (ctx) => {
@@ -34,15 +37,30 @@ bot.command('start', (ctx) => {
         console.log('message:', [ctx.update.message.text])
         answer = ctx.update.message.text
 
-
         quiz.processMessage(answer)
           .then((reply) => {
             console.log('State:', quiz.getState())
-            question = question+1
+            question++
 
             if (quiz.isCompleted() || (question == nbQ)) {
-              question = 3
-              ctx.reply(quiz.quiz.questions[question].message)
+              if (loop == 1) {
+                loop = 0
+                result = 'Ok, thank you for your answers! To sum up:\n'
+                for (var i = 0; i < nbQ; i++) {
+                  //console.log('state:', quiz)
+                  id = quiz.quiz.questions[i].answer.id
+                  result += id + ': ' + quiz.state.answers[id] + '\n'
+                }
+                ctx.reply(result)
+
+              }
+
+              else {
+                question = nbQ
+
+                  ctx.reply(quiz.quiz.questions[question].message)
+
+              }
             }
 
             else {
