@@ -3,10 +3,12 @@ var builder = require('botbuilder');
 
 // Setup Restify Server
 var server = restify.createServer();
+//console.log("env:", process.env.port)
 server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url);
 });
 
+//server.listen("385941265:AAH8Q__WEUAG-BiPPHABmw2pLJAdYY7cq-U")
 
 // Create chat connector for communicating with the Bot Framework Service
 var connector = new builder.ChatConnector({
@@ -15,10 +17,13 @@ var connector = new builder.ChatConnector({
 });
 
 // Listen for messages from users
-server.post('/api/messages', connector.listen());
+// endpoint : https://3e1e78ac.ngrok.io
+server.post('https://25142bdc.ngrok.io/api/messages', connector.listen());
+//server.post("https://api.telegram.org/bot385941265:AAH8Q__WEUAG-BiPPHABmw2pLJAdYY7cq-U/getUpdates", connector.listen())
+
 
 // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
 var bot = new builder.UniversalBot(connector, function (session) {
-    console.log("message:", session.message)
+    //console.log("message:", session.message)
     session.send("You said: %s", session.message.text);
 });
