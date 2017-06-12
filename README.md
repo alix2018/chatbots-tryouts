@@ -8,7 +8,7 @@ For the quizz bot: node kwiz_test.js <br>
 For telegraf-wit : node wit_bot <br>
 
 
-# Microsoft Bot Framework Emulator
+# Microsoft Bot Framework
 
 Directory : microsoft_bot <br>
 
@@ -25,3 +25,8 @@ Bot Telegram name: \@StephNodeBot <br>
 \- Configure the messaging endpoint on the Microsoft Portal <br>
 \- Enable inline queries for the bot: /setinline command (to the BotFather) <br>
 \- Launch the server: node app.js <br>
+
+
+# API.ai
+
+Directory : api_bot <br>
