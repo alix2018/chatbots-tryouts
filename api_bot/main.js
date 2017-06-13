@@ -1,17 +1,29 @@
-var apiai = require('apiai');
+const apiai = require('apiai');
+const Telegraf = require('../telegraf_bot/node_modules/telegraf')
 
-var app = apiai("1dd8971f2aaf40239a55ea08253aba90");
+const app = apiai("291ec8ecde384312a9c7190faae3761f");
+const bot = new Telegraf("329701042:AAHTHfBD_CHiXStfc8RicqU3TJH4z0tMQDM")
 
-var request = app.textRequest('Hi', {
-    sessionId: '70218555-8635-4e70-b757-1241220afbe6'
-});
+bot.on('message', (ctx) => {
+  console.log('text:', ctx.update.message.text)
+  var text = ctx.update.message.text
 
-request.on('response', function(response) {
-    console.log('answer:',response);
-});
+  var request = app.textRequest(text, {
+      sessionId: 'ba658112b8044f2e992d1a21f5945303'
+  })
 
-request.on('error', function(error) {
-    console.log('error:', error);
-});
+  request.on('response', function(response) {
+      console.log('answer:', response.result.fulfillment.speech)
+      var reply = response.result.fulfillment.speech
+      ctx.reply(reply)
+  });
 
-request.end();
+  request.on('error', function(error) {
+      console.log('error:', error);
+  });
+
+  request.end();
+
+})
+
+bot.startPolling()
