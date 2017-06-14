@@ -32,4 +32,5 @@ Telegram Bot name: \@StephNodeBot <br>
 Directory : api_bot <br>
 Telegram Bot name: \@StephApiAiBot <br>
 
-Test: node main.js <br>
+\- Node.js SDK test: node sdk.js <br>
+\- Weather chatbot: node weather.js <br>
