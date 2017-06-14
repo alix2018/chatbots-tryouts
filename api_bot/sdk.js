@@ -2,7 +2,7 @@ const apiai = require('apiai');
 const Telegraf = require('../telegraf_bot/node_modules/telegraf')
 
 const app = apiai("291ec8ecde384312a9c7190faae3761f");
-const bot = new Telegraf("329701042:AAHTHfBD_CHiXStfc8RicqU3TJH4z0tMQDM")
+const bot = new Telegraf("329701042:AAH42GHypX8HNbhYN_PVWtsyzHE_AO2M-Hs")
 
 // When the user writes a message
 bot.on('message', (ctx) => {
