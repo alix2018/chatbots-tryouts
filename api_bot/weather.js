@@ -1,6 +1,6 @@
 const apiai = require('apiai');
 const Telegraf = require('../telegraf_bot/node_modules/telegraf')
-var fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 
 const app = apiai("291ec8ecde384312a9c7190faae3761f");
@@ -22,6 +22,8 @@ bot.on('message', (ctx) => {
   var request = app.textRequest(text, {
       sessionId: 'ba658112b8044f2e992d1a21f5945303'
   })
+
+  // Reset the count each new message
   count = 0
 
   // Api.ai agent answers
@@ -29,7 +31,7 @@ bot.on('message', (ctx) => {
 
     console.log('answer:', response.result.fulfillment)
 
-    // We scan the answers array
+    // We scan the answers array from api.ai
     while (count < response.result.fulfillment.messages.length) {
 
       // If the answer is a custom payload
@@ -37,12 +39,17 @@ bot.on('message', (ctx) => {
         console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
         json = response.result.fulfillment.messages[count].payload.telegram.text
 
+        // Retrieve the JSON file from the url
         fetch(json)
           .then(function(res) {
             return res.json();
           }).then(function(json) {
             console.log(json);
+
+            // From Kelvin to Celsius
             temperature = parseFloat(json.main.temp-273.15).toFixed(0);
+
+            // Bot answer
             reply = "Here is the weather in " + json.name + ": " + json.weather[0].description + " with a temperature of " + temperature + "°C"
             console.log("reply:", reply)
             ctx.reply(reply)
