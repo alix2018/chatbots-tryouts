@@ -43,4 +43,5 @@ Telegram Bot name: \@StephApiAiBot <br>
 Bot weather: <br>
 A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which is bind with the telegram bot thanks to the Node.js SDK and Telegraf.
 Moreover, it can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data. <br>
+\- Packages installations : npm install <br>
 \- Weather bot: node weather.js <br>
