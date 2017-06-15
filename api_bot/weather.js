@@ -39,7 +39,7 @@ bot.on('message', (ctx) => {
         console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
         json = response.result.fulfillment.messages[count].payload.telegram.text
 
-        // Retrieve the JSON file from the url
+        // Retrieve the weather JSON file from the url
         fetch(json)
           .then(function(res) {
             return res.json();
