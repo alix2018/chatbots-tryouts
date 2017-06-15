@@ -1,4 +1,4 @@
-# Telegram Chatbot
+# Telegraf Chatbot
 
 Go to the telegram web site: https://web.telegram.org/#/im <br>
 Write the bot name in the search bar <br>
@@ -12,7 +12,7 @@ Directory : telegraf_bot <br>
 
 
 # Microsoft Bot Framework
-####(Just echo bots to test the Framework)
+**Just echo bots to test the Framework**
 
 Directory : microsoft_bot <br>
 
@@ -26,7 +26,7 @@ With the emulator: (not useful)<br>
 
 With Telegram: <br>
 Telegram Bot name: \@StephNodeBot <br>
-\- Create a portal account and a bot (see above)
+\- Create a portal account and a bot (see above) <br>
 \- [Install ngrok](https://ngrok.com) <br>
 \- Run this command: ./ngrok http -host-header=rewrite 3978 <br>
 \- Copying the https address in the messaging endpoint field: [Microsoft Bot Portal](https://dev.botframework.com) > Your bot > Settings > Messaging endpoint (it should be like this: https://50702548.ngrok.io/api/messages) <br>
@@ -35,12 +35,12 @@ Telegram Bot name: \@StephNodeBot <br>
 
 
 # API.ai
-####(The most interesting bot)
+**The most interesting bot**
 
 Directory : api_bot <br>
 Telegram Bot name: \@StephApiAiBot <br>
 
 Bot weather: <br>
-A bot with a smart conversation for basic sentences. There is a trained agent on my Api.ai account which is bind with the telegram bot thanks to the Node.js SDK and Telegraf.
-Moreover, it can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [openweathermap](http://openweathermap.org) <br>
+A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which is bind with the telegram bot thanks to the Node.js SDK and Telegraf.
+Moreover, it can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data <br>
 \- Weather bot: node weather.js <br>

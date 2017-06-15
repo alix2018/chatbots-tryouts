@@ -21,17 +21,17 @@ var question = 0
 var nbQ = 3
 loop = 1
 
-
+// The quizz start when the user writes the command: /start
 bot.command('start', (ctx) => {
   quiz.start()
     .then((reply) => {
       //console.log(quiz)
 
-      // display the first question
+      // Display the first question
       console.log('Q:', quiz.quiz.questions[question].message)
       ctx.reply(quiz.quiz.questions[question].message)
 
-      // when the user write a message
+      // When the user writes a message, the event "message" is triggered
       bot.on('message', (ctx) => {
 
         console.log('message:', [ctx.update.message.text])
@@ -42,6 +42,7 @@ bot.command('start', (ctx) => {
             console.log('State:', quiz.getState())
             question++
 
+            // When the quizz is finished
             if (quiz.isCompleted() || (question == nbQ)) {
               if (loop == 1) {
                 loop = 0
@@ -63,6 +64,7 @@ bot.command('start', (ctx) => {
               }
             }
 
+            // If the quizz is not complete, the bot sends next question
             else {
               ctx.reply(quiz.state.answers.name + ', ' + quiz.quiz.questions[question].message)
             }
@@ -70,16 +72,8 @@ bot.command('start', (ctx) => {
       })
 
     .catch((e) => console.log('error:', e))
-    /*
-    .then((reply) => {
-      return quiz.processMessage()
-    })
-    */
 
     })
 })
-
-//function loop (question) {}*/
-
 
 bot.startPolling()
