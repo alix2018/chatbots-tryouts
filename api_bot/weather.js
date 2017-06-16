@@ -32,40 +32,41 @@ bot.on('message', (ctx) => {
     console.log('answer1:', response.result.fulfillment)
 
     // We scan the answers array from api.ai, just Api.ai default or telegram responses
-    while ((count < response.result.fulfillment.messages.length) && ((response.result.fulfillment.messages[count].platform == undefined)
-            || (response.result.fulfillment.messages[count].platform == "telegram") )) {
+    while (count < response.result.fulfillment.messages.length) {
 
-      console.log('platform', response.result.fulfillment.messages[count].platform)
-      // If the answer is a custom payload (type = 4)
-      if ((response.result.fulfillment.messages[count].type == 4)) {
-        console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
-        json = response.result.fulfillment.messages[count].payload.telegram.text
+      if ( (response.result.fulfillment.messages[count].platform == undefined) ||
+           (response.result.fulfillment.messages[count].platform == "telegram") ) {
+        console.log('platform:', response.result.fulfillment.messages[count].platform)
+        // If the answer is a custom payload (type = 4)
+        if ((response.result.fulfillment.messages[count].type == 4)) {
+          console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
+          json = response.result.fulfillment.messages[count].payload.telegram.text
 
-        // Retrieve the weather JSON file from the url
-        fetch(json)
-          .then(function(res) {
-            return res.json();
-          }).then(function(json) {
-            console.log(json);
+          // Retrieve the weather JSON file from the url
+          fetch(json)
+            .then(function(res) {
+              return res.json();
+            }).then(function(json) {
+              console.log(json);
 
-            // Conversion from Kelvin to Celsius
-            temperature = parseFloat(json.main.temp-273.15).toFixed(0);
+              // Conversion from Kelvin to Celsius
+              temperature = parseFloat(json.main.temp-273.15).toFixed(0);
 
-            // Bot answer for the weather
-            reply = "Here is the weather in " + json.name + ": " + json.weather[0].description + " with a temperature of " + temperature + "°C"
-            console.log("reply:", reply)
-            ctx.reply(reply)
-          });
+              // Bot answer for the weather
+              reply = "Here is the weather in " + json.name + ": " + json.weather[0].description + " with a temperature of " + temperature + "°C"
+              console.log("reply:", reply)
+              ctx.reply(reply)
+            });
+        }
+
+        // If the answer is a text response (type = 0)
+        else if (response.result.fulfillment.messages[count].type == 0) {
+
+          console.log('bot text:', response.result.fulfillment.messages[count].speech)
+          reply = response.result.fulfillment.messages[count].speech
+          ctx.reply(reply)
+        }
       }
-
-      // If the answer is a text response (type = 0)
-      else if (response.result.fulfillment.messages[count].type == 0) {
-
-        console.log('bot text:', response.result.fulfillment.messages[count].speech)
-        reply = response.result.fulfillment.messages[count].speech
-        ctx.reply(reply)
-      }
-
     // Next bot answer
     count++
     }
