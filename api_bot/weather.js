@@ -29,13 +29,15 @@ bot.on('message', (ctx) => {
   // Api.ai agent answers
   request.on('response', function(response) {
 
-    console.log('answer:', response.result.fulfillment)
+    console.log('answer1:', response.result.fulfillment)
 
-    // We scan the answers array from api.ai
-    while (count < response.result.fulfillment.messages.length) {
+    // We scan the answers array from api.ai, just Api.ai default or telegram responses
+    while ((count < response.result.fulfillment.messages.length) && ((response.result.fulfillment.messages[count].platform == undefined)
+            || (response.result.fulfillment.messages[count].platform == "telegram") )) {
 
+      console.log('platform', response.result.fulfillment.messages[count].platform)
       // If the answer is a custom payload (type = 4)
-      if (response.result.fulfillment.messages[count].type == 4) {
+      if ((response.result.fulfillment.messages[count].type == 4)) {
         console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
         json = response.result.fulfillment.messages[count].payload.telegram.text
 
