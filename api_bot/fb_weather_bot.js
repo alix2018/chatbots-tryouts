@@ -1,9 +1,15 @@
+const express = require('express');
+const FBBotFramework = require('fb-bot-framework');
 const apiai = require('apiai');
-const Telegraf = require('../telegraf_bot/node_modules/telegraf')
 const fetch = require('node-fetch');
 
-const app = apiai("291ec8ecde384312a9c7190faae3761f");
-const bot = new Telegraf("329701042:AAH42GHypX8HNbhYN_PVWtsyzHE_AO2M-Hs")
+// Initialization
+const app = express();
+const bot = new FBBotFramework({
+	page_token: "EAALdLyoY5iMBAFiJLBp9ZAOxcQX0ZBtSU3Hl0JBpMGefzpE6YU8XDTK91p7HiYOf1RALdkAcOvzp7G1JeUfi2fArtxPb8YWLUZC2eBAEZColi4ZCTVghUwFXs9AmkpyI8CKlcikFan8P5TQDsh2TseTVkZANrA7xNgG37ZCKkHbvAZDZD",
+  verify_token: "fbtoken"
+});
+const agent = apiai("291ec8ecde384312a9c7190faae3761f");
 
 var reply = new String()
 var jsonURL = new String()
@@ -11,15 +17,19 @@ var count = 0
 var temperature
 
 
-// When the user writes a message, the event "message" is triggered
-bot.on('message', (ctx) => {
+// Setup Express middleware for /webhook
+app.use('/webhook', bot.middleware());
 
-  // Retrieve text content
-  console.log('user text:', ctx.update.message.text)
-  var text = ctx.update.message.text
+app.set('port', (process.env.PORT || 3000))
+
+// Setup listener for incoming messages
+bot.on('message', (userId, message) => {
+  console.log('User text:', message)
+  //bot.sendTextMessage(userId, "Echo Message: " + message);
+
 
   // Send text content to the right Api.ai agent
-  var request = app.textRequest(text, {
+  var request = agent.textRequest(message, {
       sessionId: 'ba658112b8044f2e992d1a21f5945303'
   })
 
@@ -31,16 +41,16 @@ bot.on('message', (ctx) => {
 
     console.log('answer1:', response.result.fulfillment)
 
-    // We scan the answers array from api.ai, just Api.ai default or telegram responses
+    // We scan the answers array from api.ai, just Api.ai default or Facebook responses
     while (count < response.result.fulfillment.messages.length) {
 
       if ( (response.result.fulfillment.messages[count].platform == undefined) ||
-           (response.result.fulfillment.messages[count].platform == "telegram") ) {
+           (response.result.fulfillment.messages[count].platform == "facebook") ) {
         console.log('platform:', response.result.fulfillment.messages[count].platform)
         // If the answer is a custom payload (type = 4)
         if ((response.result.fulfillment.messages[count].type == 4)) {
-          console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
-          json = response.result.fulfillment.messages[count].payload.telegram.text
+          console.log('answer:', response.result.fulfillment.messages[count].payload)
+          json = response.result.fulfillment.messages[count].payload.text
 
           // Retrieve the weather JSON file from the url
           fetch(json)
@@ -55,7 +65,7 @@ bot.on('message', (ctx) => {
               // Bot answer for the weather
               reply = "Here is the weather in " + json.name + ": " + json.weather[0].description + " with a temperature of " + temperature + "°C"
               console.log("reply:", reply)
-              ctx.reply(reply)
+              bot.sendTextMessage(userId, reply)
             });
         }
 
@@ -64,14 +74,13 @@ bot.on('message', (ctx) => {
 
           console.log('bot text:', response.result.fulfillment.messages[count].speech)
           reply = response.result.fulfillment.messages[count].speech
-          ctx.reply(reply)
+          bot.sendTextMessage(userId, reply)
         }
       }
+
     // Next bot answer
     count++
     }
-
-
   });
 
   request.on('error', function(error) {
@@ -82,4 +91,7 @@ bot.on('message', (ctx) => {
 
 })
 
-bot.startPolling()
+// Make Express listening
+app.listen(app.get('port'), () => {
+  console.log('Started on port', app.get('port'))
+})
