@@ -27,7 +27,7 @@ bot.on('message', (ctx) => {
   count = 0
 
   // Api.ai agent answers
-  request.on('response', function(response) {
+  request.on('response', (response) => {
 
     console.log('answer1:', response.result.fulfillment)
 
@@ -39,14 +39,14 @@ bot.on('message', (ctx) => {
         console.log('platform:', response.result.fulfillment.messages[count].platform)
         // If the answer is a custom payload (type = 4)
         if ((response.result.fulfillment.messages[count].type == 4)) {
-          console.log('answer:', response.result.fulfillment.messages[count].payload.text)
-          json = response.result.fulfillment.messages[count].payload.text
+          console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
+          json = response.result.fulfillment.messages[count].payload.telegram.text
 
           // Retrieve the weather JSON file from the url
           fetch(json)
-            .then(function(res) {
+            .then( (res) => {
               return res.json();
-            }).then(function(json) {
+            }).then( (json) => {
               console.log(json);
 
               // Conversion from Kelvin to Celsius
@@ -74,7 +74,7 @@ bot.on('message', (ctx) => {
 
   });
 
-  request.on('error', function(error) {
+  request.on('error', (error) => {
       console.log('errooor:', error);
   });
 

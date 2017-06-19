@@ -14,7 +14,34 @@ const agent = apiai("291ec8ecde384312a9c7190faae3761f");
 var reply = new String()
 var jsonURL = new String()
 var count = 0
-var temperature
+var temperature, latitude, longitude
+
+var weather_icons = {
+  "clear sky": "http://openweathermap.org/img/w/01d.png",
+  "few clouds": "http://openweathermap.org/img/w/02d.png",
+  "scattered clouds": "http://openweathermap.org/img/w/03d.png",
+  "broken clouds": "http://openweathermap.org/img/w/04d.png",
+  "shower rain": "http://openweathermap.org/img/w/09d.png",
+  "rain": "http://openweathermap.org/img/w/10d.png",
+  "thunderstorm": "http://openweathermap.org/img/w/11d.png",
+  "snow": "http://openweathermap.org/img/w/13d.png",
+  "mist": "http://openweathermap.org/img/w/50d.png"
+}
+
+var elements = [
+    {
+        "title": "Weather",
+        "image_url": "http://openweathermap.org/img/w/01d.png",
+        "subtitle": "Details about the weather",
+        "buttons": [
+            {
+                "type":"web_url",
+                "url":"http://openweathermap.org/city/",
+                "title":"More details"
+            }
+        ]
+    }
+];
 
 
 // Setup Express middleware for /webhook
@@ -26,6 +53,7 @@ app.set('port', (process.env.PORT || 3000))
 bot.on('message', (userId, message) => {
   console.log('User text:', message)
   //bot.sendTextMessage(userId, "Echo Message: " + message);
+  //bot.sendLocationRequest(userId, "Where are you?")
 
 
   // Send text content to the right Api.ai agent
@@ -37,7 +65,7 @@ bot.on('message', (userId, message) => {
   count = 0
 
   // Api.ai agent answers
-  request.on('response', function(response) {
+  request.on('response', (response) => {
 
     console.log('answer1:', response.result.fulfillment)
 
@@ -50,23 +78,9 @@ bot.on('message', (userId, message) => {
         // If the answer is a custom payload (type = 4)
         if ((response.result.fulfillment.messages[count].type == 4)) {
           console.log('answer:', response.result.fulfillment.messages[count].payload)
-          json = response.result.fulfillment.messages[count].payload.text
+          json = response.result.fulfillment.messages[count].payload.facebook.attachment.payload.text
 
-          // Retrieve the weather JSON file from the url
-          fetch(json)
-            .then(function(res) {
-              return res.json();
-            }).then(function(json) {
-              console.log(json);
-
-              // Conversion from Kelvin to Celsius
-              temperature = parseFloat(json.main.temp-273.15).toFixed(0);
-
-              // Bot answer for the weather
-              reply = "Here is the weather in " + json.name + ": " + json.weather[0].description + " with a temperature of " + temperature + "°C"
-              console.log("reply:", reply)
-              bot.sendTextMessage(userId, reply)
-            });
+          jsonToCard(userId, json)
         }
 
         // If the answer is a text response (type = 0)
@@ -75,6 +89,10 @@ bot.on('message', (userId, message) => {
           console.log('bot text:', response.result.fulfillment.messages[count].speech)
           reply = response.result.fulfillment.messages[count].speech
           bot.sendTextMessage(userId, reply)
+
+          // TODO
+          //bot.sendLocationRequest(userId, "Where are you?")
+
         }
       }
 
@@ -83,7 +101,7 @@ bot.on('message', (userId, message) => {
     }
   });
 
-  request.on('error', function(error) {
+  request.on('error', (error) => {
       console.log('errooor:', error);
   });
 
@@ -91,7 +109,41 @@ bot.on('message', (userId, message) => {
 
 })
 
+bot.on('attachment', function(userId, attachment) {
+  console.log('latitude:', attachment[0].payload.coordinates.lat)
+  console.log('longitude:', attachment[0].payload.coordinates.long)
+  latitude = attachment[0].payload.coordinates.lat;
+  longitude = attachment[0].payload.coordinates.long;
+
+  json = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=9393e4c87b6070958c8611b9f5211c48"
+  jsonToCard(userId, json)
+
+})
+
 // Make Express listening
 app.listen(app.get('port'), () => {
   console.log('Started on port', app.get('port'))
 })
+
+
+function jsonToCard(userId, json) {
+  // Retrieve the weather JSON file from the url
+  fetch(json)
+    .then( (res) => {
+      return res.json();
+    }).then( (json) => {
+      console.log(json);
+
+      // Conversion from Kelvin to Celsius
+      temperature = parseFloat(json.main.temp-273.15).toFixed(0);
+
+      // Bot answer for the weather
+      elements[0].title = "Weather in " + json.name
+      elements[0].image_url = weather_icons[json.weather[0].description]
+      elements[0].subtitle = json.weather[0].description + " with a temperature of " + temperature + "°C"
+      elements[0].buttons[0].url = "http://openweathermap.org/city/" + json.id
+
+      // Send a card with a picture, details and website link
+      bot.sendGenericMessage(userId, elements);
+    })
+}

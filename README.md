@@ -43,13 +43,13 @@ Directory : api_bot <br>
 Bot weather: <br>
 A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data. <br>
 
-_Telegram bot_
+_Telegram bot_ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Telegraf. <br>
 \- Telegram Bot name: \@StephApiAiBot <br>
 \- Packages installations : npm install <br>
 \- Weather bot: node telegram_weather_bot.js <br>
 
-_Facebook bot_
+_Facebook bot_ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the FB Bot Framework. <br>
 \- Facebook Messenger Bot page:  https://www.facebook.com/StephChatbot <br>
 \- I need to run the local server and you just do: node fb_weather_bot.js <br>
