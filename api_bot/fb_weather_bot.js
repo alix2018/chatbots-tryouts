@@ -15,17 +15,18 @@ var reply = new String()
 var jsonURL = new String()
 var count = 0
 var temperature, latitude, longitude
+var ngrok = "https://a2c7e523.ngrok.io"
 
 var weather_icons = {
-  "clear sky": "http://openweathermap.org/img/w/01d.png",
-  "few clouds": "http://openweathermap.org/img/w/02d.png",
-  "scattered clouds": "http://openweathermap.org/img/w/03d.png",
-  "broken clouds": "http://openweathermap.org/img/w/04d.png",
-  "shower rain": "http://openweathermap.org/img/w/09d.png",
-  "rain": "http://openweathermap.org/img/w/10d.png",
-  "thunderstorm": "http://openweathermap.org/img/w/11d.png",
-  "snow": "http://openweathermap.org/img/w/13d.png",
-  "mist": "http://openweathermap.org/img/w/50d.png"
+  "01d": "http://imgh.us/32_15.png",
+  "20d": "http://imgh.us/30_18.png",
+  "03d": "http://imgh.us/26_16.png",
+  "04d": "http://imgh.us/25_16.png",
+  "09d": "http://imgh.us/11_130.png",
+  "10d": "http://imgh.us/39_12.png",
+  "11d": "http://imgh.us/0_50.png",
+  "13d": "http://imgh.us/13_64.png",
+  "50d": "http://imgh.us/20_20.png"
 }
 
 var elements = [
@@ -48,6 +49,7 @@ var elements = [
 app.use('/webhook', bot.middleware());
 
 app.set('port', (process.env.PORT || 3000))
+
 
 // Setup listener for incoming messages
 bot.on('message', (userId, message) => {
@@ -87,11 +89,17 @@ bot.on('message', (userId, message) => {
         else if (response.result.fulfillment.messages[count].type == 0) {
 
           console.log('bot text:', response.result.fulfillment.messages[count].speech)
-          reply = response.result.fulfillment.messages[count].speech
-          bot.sendTextMessage(userId, reply)
 
-          // TODO
-          //bot.sendLocationRequest(userId, "Where are you?")
+					// Ask for the city and send a location button
+					if (response.result.fulfillment.messages[count].speech == "In which city?") {
+						bot.sendLocationRequest(userId, response.result.fulfillment.messages[count].speech)
+					}
+
+					// All other answers from the bot
+					else {
+	          reply = response.result.fulfillment.messages[count].speech
+	          bot.sendTextMessage(userId, reply)
+					}
 
         }
       }
@@ -109,14 +117,17 @@ bot.on('message', (userId, message) => {
 
 })
 
+// When the user send his location
 bot.on('attachment', function(userId, attachment) {
-  console.log('latitude:', attachment[0].payload.coordinates.lat)
-  console.log('longitude:', attachment[0].payload.coordinates.long)
-  latitude = attachment[0].payload.coordinates.lat;
-  longitude = attachment[0].payload.coordinates.long;
+	console.log('attachment:', attachment)
 
-  json = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=9393e4c87b6070958c8611b9f5211c48"
-  jsonToCard(userId, json)
+	if (attachment[0].type == "location") {
+	  latitude = attachment[0].payload.coordinates.lat;
+	  longitude = attachment[0].payload.coordinates.long;
+
+	  json = "http://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=9393e4c87b6070958c8611b9f5211c48"
+	  jsonToCard(userId, json)
+	}
 
 })
 
@@ -125,8 +136,9 @@ app.listen(app.get('port'), () => {
   console.log('Started on port', app.get('port'))
 })
 
-
+// Fonction to retrieve a json from an URL and return a weather card with all the information
 function jsonToCard(userId, json) {
+
   // Retrieve the weather JSON file from the url
   fetch(json)
     .then( (res) => {
@@ -136,10 +148,12 @@ function jsonToCard(userId, json) {
 
       // Conversion from Kelvin to Celsius
       temperature = parseFloat(json.main.temp-273.15).toFixed(0);
+			//app.use(express.static(__dirname + '/weather_pictures'));
+			//app.use("/static", express.static("/weather_pictures"))
 
-      // Bot answer for the weather
+      // Bot answer about the weather
       elements[0].title = "Weather in " + json.name
-      elements[0].image_url = weather_icons[json.weather[0].description]
+      elements[0].image_url = weather_icons[json.weather[0].icon]
       elements[0].subtitle = json.weather[0].description + " with a temperature of " + temperature + "°C"
       elements[0].buttons[0].url = "http://openweathermap.org/city/" + json.id
 
