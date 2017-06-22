@@ -62,6 +62,7 @@ OR: <br>
 \- Log you : heroku login <br>
 \- Clone the repository: heroku git:clone -a immense-tor-25991 <br>
 \- Then : cd immense-tor-25991 <br>
+\- Packages installations: npm install
 \- Deploy the app: git push heroku master <br>
 \- More information on the Heroku Documentation: [https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction) <br>
 
