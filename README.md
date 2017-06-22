@@ -49,7 +49,21 @@ The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Tel
 \- Packages installations : npm install <br>
 \- Weather bot: node telegram_weather_bot.js <br>
 
+
+**On Heroku**
+
 _Facebook bot_ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the FB Bot Framework. <br>
-\- Facebook Messenger Bot page:  https://www.facebook.com/StephChatbot <br>
+\- Facebook Messenger Bot page: [https://www.facebook.com/StephChatbot](https://www.facebook.com/StephChatbot) <br>
+\- I can launch the server and you can talk to the bot <br>
+
+OR: <br>
+\- Install the Heroku CLI (with homebrew): brew install heroku <br>
+\- Log you : heroku login <br>
+\- Clone the repository: heroku git:clone -a immense-tor-25991 <br>
+\- Then : cd immense-tor-25991 <br>
+\- Deploy the app: git push heroku master <br>
+\- More information on the Heroku Documentation: [https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction) <br>
+
+
 \- I need to run the local server and you just do: node fb_weather_bot.js <br>
