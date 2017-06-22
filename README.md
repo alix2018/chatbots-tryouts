@@ -65,6 +65,3 @@ OR: <br>
 \- Packages installations: npm install
 \- Deploy the app: git push heroku master <br>
 \- More information on the Heroku Documentation: [https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction) <br>
-
-
-\- I need to run the local server and you just do: node fb_weather_bot.js <br>

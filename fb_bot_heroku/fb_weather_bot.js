@@ -3,14 +3,12 @@ const FBBotFramework = require('fb-bot-framework');
 const apiai = require('apiai');
 const fetch = require('node-fetch');
 const path = require('path');
-//var engines = require('consolidate');
-
 
 // Initialization
 const app = express();
 const bot = new FBBotFramework({
-	page_token: "EAALdLyoY5iMBAFiJLBp9ZAOxcQX0ZBtSU3Hl0JBpMGefzpE6YU8XDTK91p7HiYOf1RALdkAcOvzp7G1JeUfi2fArtxPb8YWLUZC2eBAEZColi4ZCTVghUwFXs9AmkpyI8CKlcikFan8P5TQDsh2TseTVkZANrA7xNgG37ZCKkHbvAZDZD",
-  verify_token: "fbtoken"
+	page_token: "EAALdLyoY5iMBAIddmLh6kHpNJ6bZBZAZC1GmUItFPoHYZCmMagOzZAR4BCdCgaSfD6ssG7JyZALculLa4wvnEU3WXto0hoWhknvT5O7WCpZCOlbFdbZAAHoauKgz4HF0bKmkbDLlUl16y40ZBpu0dxMPHGOGckzK3hCH62zMSZAuEw5gZDZD",
+  verify_token: "heroku_token"
 });
 const agent = apiai("291ec8ecde384312a9c7190faae3761f");
 
@@ -19,84 +17,73 @@ var jsonURL = new String()
 var botAnswer = new String()
 var count = 0
 var temperature, latitude, longitude
-var ngrok = "https://539dc36d.ngrok.io"
+var url = "https://immense-tor-25991.herokuapp.com"
 
 // Setup Express middleware for /webhook
+app.use('/webhook', bot.middleware());
 
-//app.use('/webhook', bot.middleware());
+// Set the right port
+app.set('port', (process.env.PORT || 5000));
+console.log('port:',process.env.PORT)
 
-
-app.get("/webhook", function(req, res) {
-	console.log("token:",req.query["hub.verify_token"])
-    if (req.query["hub.verify_token"] === "fbtoken") {
-        res.send(req.query["hub.challenge"]);
-    } else {
-        res.send("Error, wrong validation token");
-    }
-});
+// Path for a weather picture: /weather/picture.png
+app.use('/weather', express.static(__dirname + '/weather_pictures'));
+// Path for a weather picture: /views/file.html
+app.use('/views', express.static(__dirname + '/views'));
 
 app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname + '/views/webview.html'));
+    res.send("Welcome")
 });
 
-app.set('port', (process.env.PORT || 3000));
 
-
-app.use(express.static(__dirname + '/views'));
-
-app.get('/webview', function(req, res) {
-    res.sendFile(path.join(__dirname + '/webview.html'));
-});
-
-/*
-app.get('/weather', function(req, res) {
-    res.sendFile(path.join(__dirname + '/weather_pictures/0.png'));
-});
-*/
-
+// Display weather pictures
 var weatherIcons = {
-	"01d": ngrok + "/weather/32.png",
-	"02d": ngrok + "/weather/30.png",
-	"03d": ngrok + "/weather/26.png",
-	"04d": ngrok + "/weather/25.png",
-	"09d": ngrok + "/weather/11.png",
-	"10d": ngrok + "/weather/39.png",
-	"11d": ngrok + "/weather/0.png",
-	"13d": ngrok + "/weather/13.png",
-	"50d": ngrok + "/weather/20.png"
+	"01d": url + "/weather/32.png",
+	"02d": url + "/weather/30.png",
+	"03d": url + "/weather/26.png",
+	"04d": url + "/weather/25.png",
+	"09d": url + "/weather/11.png",
+	"10d": url + "/weather/39.png",
+	"11d": url + "/weather/0.png",
+	"13d": url + "/weather/13.png",
+	"50d": url + "/weather/20.png"
 }
 
+// Send a card
 var weatherCard = [
   {
     "title": "Weather",
-    "image_url": "http://imgh.us/32_15.pn",
+    "image_url": url + "/weather/0.png",
     "subtitle": "Details about the weather",
     "buttons": [
       {
         "type":"web_url",
         "url":"http://openweathermap.org/city/",
         "title":"More details"
-      }
+      },
+			{
+					"type":"web_url",
+					"title":"Widget",
+					"url": url + "/views/webview.html",
+					"messenger_extensions": true,
+					"webview_height_ratio": "tall",
+					"fallback_url": url + "/views/webview.html"
+			}
     ]
   }
 ];
 
+// Send a button
 var menuButtons = [
     {
         "type":"web_url",
-				"title":"Test",
-        "url": ngrok + "/views/webview.html",
+				"title":"menuButtons",
+        "url": url + "/views/webview.html",
 				"messenger_extensions": true,
-				"webview_height_ratio": "tall",
-				"fallback_url": ngrok + "/views/webview.html"
+				"webview_height_ratio": "compact",
+				"fallback_url": url + "/views/webview.html"
     }
 ];
-
-
-// Path for a weather picture: /weather/picture.png
-app.use('/weather', express.static(__dirname + '/weather_pictures'));
-// Path for a weather picture: /views/file.html
-app.use('/views', express.static(__dirname + '/views'));
 
 // Setup listener for incoming messages
 bot.on('message', (userId, message) => {
@@ -145,15 +132,17 @@ bot.on('message', (userId, message) => {
 					// All other answers from the bot
 					else {
 	          reply = botAnswer.speech
-	          //bot.sendTextMessage(userId, reply)
+	          bot.sendTextMessage(userId, reply)
 
-						//bot.sendListMessage(userId, elements)
-						//console.log('elements:', elements)
-						var text = "text"
+						/*
+						bot.sendListMessage(userId, elements)
+						console.log('elements:', elements)
+						bot.sendListMessage(userId, elements, function(){console.log("ARGS ", arguments)})
+
+						var text = "Button Title"
 						console.log('menuButtons:', menuButtons)
-						bot.sendButtonMessage(userId, text, menuButtons);
-
-						//bot.sendListMessage(userId, elements, function(){console.log("ARGS ", arguments)})
+						bot.sendButtonMessage(userId, text, menuButtons, function(){console.log("ARGS ", arguments)});
+						*/
 
 					}
 
@@ -186,13 +175,6 @@ bot.on('attachment', function(userId, attachment) {
 	}
 
 })
-/*
-// viewed at http://localhost:3000
-app.get('/', function(req, res) {
-	console.log('res:', res)
-  //res.sendFile(path.join(__dirname + '/webview.html'));
-});
-*/
 
 // Make Express listening
 app.listen(app.get('port'), () => {
