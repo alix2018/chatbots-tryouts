@@ -1,5 +1,5 @@
 const apiai = require('apiai');
-const Telegraf = require('../telegraf_bot/node_modules/telegraf')
+const Telegraf = require('telegraf')
 const fetch = require('node-fetch');
 
 const app = apiai("291ec8ecde384312a9c7190faae3761f");

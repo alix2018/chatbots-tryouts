@@ -1,5 +1,5 @@
 const apiai = require('apiai');
-const Telegraf = require('../telegraf_bot/node_modules/telegraf')
+const Telegraf = require('telegraf')
 
 const app = apiai("291ec8ecde384312a9c7190faae3761f");
 const bot = new Telegraf("329701042:AAH42GHypX8HNbhYN_PVWtsyzHE_AO2M-Hs")

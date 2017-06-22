@@ -5,10 +5,10 @@ Write the bot name in the search bar <br>
 Telegram Bot name: \@StephAlixBot <br>
 Directory : telegraf_bot <br>
 
-\- Packages installations : npm install <br>
+\- Packages installation: npm install <br>
 \- To launch the node.js server: node chatbot1.js (just a test)<br>
 \- For the quizz bot: node kwiz_test.js (begin with the /start command, ask you some questions and save your answers in a tab)<br>
-\- For telegraf-wit : node wit_bot (just a test with the Wit.ai telegraf library, print the analyzes in the terminal) <br>
+\- For telegraf-wit: node wit_bot (just a test with the Wit.ai telegraf library, print the analyzes in the terminal) <br>
 
 
 # Microsoft Bot Framework
@@ -32,8 +32,8 @@ With the emulator: (not useful)<br>
 \- Create a portal account: [https://dev.botframework.com](https://dev.botframework.com) <br>
 \- Create a bot <br>
 \- Fill out the identification fields on the emulator (Microsoft App ID and Password) <br>
-\- Packages installations : npm install <br>
-\- Launch the server : node app.js <br>
+\- Packages installation: npm install <br>
+\- Launch the server: node app.js <br>
 
 # API.ai
 **The most interesting bot**
@@ -46,7 +46,7 @@ A bot with a smart conversation for basic sentences. There is a trained agent on
 _Telegram bot_ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Telegraf. <br>
 \- Telegram Bot name: \@StephApiAiBot <br>
-\- Packages installations : npm install <br>
+\- Packages installation: npm install <br>
 \- Weather bot: node telegram_weather_bot.js <br>
 
 
@@ -62,6 +62,6 @@ OR: <br>
 \- Log you : heroku login <br>
 \- Clone the repository: heroku git:clone -a immense-tor-25991 <br>
 \- Then : cd immense-tor-25991 <br>
-\- Packages installations: npm install
+\- Packages installation: npm install <br>
 \- Deploy the app: git push heroku master <br>
 \- More information on the Heroku Documentation: [https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction](https://devcenter.heroku.com/articles/getting-started-with-nodejs#introduction) <br>

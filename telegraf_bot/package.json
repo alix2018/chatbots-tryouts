@@ -1,0 +1,17 @@
+{
+  "name": "telegraf_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "chatbot1.js",
+  "dependencies": {
+    "kwiz": "^3.0.0",
+    "telegraf": "^3.7.4",
+    "telegraf-wit": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alix2018",
+  "license": "ISC"
+}
