@@ -4,26 +4,23 @@
   <head>
   <meta charset="utf-8" />
   <title>Widget Webview</title>
+  <link rel="stylesheet" type="text/css" href="../public/stylesheets/weather_widget.css">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript" src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script type="text/javascript" src="../simple_weather/jquery.simpleWeather.min.js"></script>
+  <script type="text/javascript" src="../public/javascripts/weather.js"></script>
+
+  <!--
+  <script type="text/javascript" src="../simple_weather/gulpfile.js"></script>
+  <script type="text/javascript" src="../fb_weather_bot.js"></script>
+  -->
+
   </head>
 
   <body>
 
-  <p>Test</p>
+  <div id="weather"></div>
+    <script type="text/javascript" src="../public/javascripts/weather.js"></script>
 
-<!--
-  <div id="openweathermap-widget-15"></div>
-
-    <script>
-    window.myWidgetParam ? window.myWidgetParam : window.myWidgetParam = [];
-    window.myWidgetParam.push({id: 15,cityid: '2643743',appid: '9393e4c87b6070958c8611b9f5211c48',units: 'metric',containerid: 'openweathermap-widget-15'});
-
-    (function() {
-      var script = document.createElement('script');
-      script.async = true;
-      script.src = "http://openweathermap.org/themes/openweathermap/assets/vendor/owm/js/weather-widget-generator.js";
-      var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(script, s);
-    })();
-    </script>
--->
   </body>
 </html>

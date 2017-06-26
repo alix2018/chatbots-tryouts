@@ -16,8 +16,10 @@ var reply = new String()
 var jsonURL = new String()
 var botAnswer = new String()
 var count = 0
+var dataJson = {}
 var temperature, latitude, longitude
 var url = "https://immense-tor-25991.herokuapp.com"
+//var url ="https://localhost:5000"
 
 // Setup Express middleware for /webhook
 app.use('/webhook', bot.middleware());
@@ -26,27 +28,35 @@ app.use('/webhook', bot.middleware());
 app.set('port', (process.env.PORT || 5000));
 console.log('port:',process.env.PORT)
 
-// Path for a weather picture: /weather/picture.png
-app.use('/weather', express.static(__dirname + '/weather_pictures'));
-// Path for a weather picture: /views/file.html
-app.use('/views', express.static(__dirname + '/views'));
 
+app.use(express.static(__dirname));
+
+// Welcome page
 app.get('/', function(req, res) {
-    res.send("Welcome")
+	console.log(req)
+  res.send("Welcome")
 });
 
+/*
+app.set('views', './views')
+app.set('view engine', 'pug')
+*/
+
+app.get('/test', function (req, res) {
+  res.render('index', { title: 'Hey', message: 'Hello there!' })
+})
 
 // Display weather pictures
 var weatherIcons = {
-	"01d": url + "/weather/32.png",
-	"02d": url + "/weather/30.png",
-	"03d": url + "/weather/26.png",
-	"04d": url + "/weather/25.png",
-	"09d": url + "/weather/11.png",
-	"10d": url + "/weather/39.png",
-	"11d": url + "/weather/0.png",
-	"13d": url + "/weather/13.png",
-	"50d": url + "/weather/20.png"
+	"01d": url + "/weather_pictures/32.png",
+	"02d": url + "/weather_pictures/30.png",
+	"03d": url + "/weather_pictures/26.png",
+	"04d": url + "/weather_pictures/25.png",
+	"09d": url + "/weather_pictures/11.png",
+	"10d": url + "/weather_pictures/39.png",
+	"11d": url + "/weather_pictures/0.png",
+	"13d": url + "/weather_pictures/13.png",
+	"50d": url + "/weather_pictures/20.png"
 }
 
 // Send a card
@@ -66,7 +76,7 @@ var weatherCard = [
 					"title":"Widget",
 					"url": url + "/views/webview.html",
 					"messenger_extensions": true,
-					"webview_height_ratio": "tall",
+					"webview_height_ratio": "compact",
 					"fallback_url": url + "/views/webview.html"
 			}
     ]
@@ -176,6 +186,11 @@ bot.on('attachment', function(userId, attachment) {
 
 })
 
+app.get('/datajson', function(req, res) {
+		//console.log('datajson', json)
+		res.send(dataJson)
+});
+
 // Make Express listening
 app.listen(app.get('port'), () => {
   console.log('Started on port', app.get('port'))
@@ -191,10 +206,12 @@ function jsonToCard(userId, json) {
     }).then( (json) => {
       console.log(json);
 
+			dataJson = json
+			console.log('datajson:', dataJson)
+
+
       // Conversion from Kelvin to Celsius
       temperature = parseFloat(json.main.temp-273.15).toFixed(0);
-			//app.use(express.static(__dirname + '/weather_pictures'));
-			//app.use("/static", express.static("/weather_pictures"))
 
       // Bot answer about the weather
       weatherCard[0].title = "Weather in " + json.name
