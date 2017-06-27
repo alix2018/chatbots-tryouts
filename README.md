@@ -1,9 +1,9 @@
 # Telegraf Chatbot
 
-Go to the [telegram](https://web.telegram.org/#/im) web site:  <br>
-Write the bot name in the search bar <br>
-Telegram Bot name: \@StephAlixBot <br>
-Directory : telegraf_bot <br>
+\- Go to the [telegram](https://web.telegram.org/#/im) web site <br>
+\- Write the bot name in the search bar <br>
+\- Telegram Bot name: \@StephAlixBot <br>
+\- Directory : telegraf_bot <br>
 
 \- Packages installation:
 ```
@@ -26,11 +26,11 @@ node wit_bot
 # Microsoft Bot Framework
 **Just echo bots to test the Framework**
 
-Directory : microsoft_bot <br>
+\- Directory : microsoft_bot <br>
 
 With Telegram: <br>
-Telegram Bot name: \@StephNodeBot <br>
-I can run the local server on the right port and bind it with my Microsoft account and you don't need to do next points, just do:
+\- Telegram Bot name: \@StephNodeBot <br>
+\- I can run the local server on the right port and bind it with my Microsoft account and you don't need to do next points, just do:
 ```
 node app.js
 ```
@@ -47,6 +47,7 @@ node app.js
 ```
 node app.js
 ```
+
 
 With the emulator: (not useful)<br>
 \- [Install the Emulator](https://emulator.botframework.com/) <br>
@@ -65,7 +66,7 @@ node app.js
 # API.ai
 **The most interesting bot**
 
-Directory : api_bot <br>
+\- Directory : api_bot <br>
 
 Bot weather: <br>
 A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [Openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data. <br>
