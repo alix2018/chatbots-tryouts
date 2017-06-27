@@ -39,7 +39,7 @@ node app.js
 \- [Install ngrok](https://ngrok.com) <br>
 \- Run this command:
 ```
-./ngrok http -host-header=rewrite 3978 <br>
+./ngrok http -host-header=rewrite 3978
 ```
 \- Copying the https address in the messaging endpoint field: [Microsoft Bot Portal](https://dev.botframework.com) > Your bot > Settings > Messaging endpoint (it should be like this: https://50702548.ngrok.io/api/messages) <br>
 \- Allow Telegram app: [Microsoft Bot Portal](https://dev.botframework.com) > Your bot > Channels > Telegram > Access Token = 385941265:AAH8Q__WEUAG-BiPPHABmw2pLJAdYY7cq-U <br>
