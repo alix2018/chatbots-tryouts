@@ -1,6 +1,6 @@
 # Telegraf Chatbot
 
-Go to the telegram web site: https://web.telegram.org/#/im <br>
+Go to the [telegram](https://web.telegram.org/#/im) web site:  <br>
 Write the bot name in the search bar <br>
 Telegram Bot name: \@StephAlixBot <br>
 Directory : telegraf_bot <br>
