@@ -39,9 +39,6 @@ app.get('/', function(req, res) {
 app.set('views', './views');
 app.set('view engine', 'pug');
 
-bot.getUserProfile(userId, function (err, profile) {
-    console.log('profile:', profile);
-});
 
 // Display weather pictures
 var weatherIcons = {
@@ -119,6 +116,10 @@ var testCard = [
 bot.on('message', (userId, message) => {
 
 	console.log('user id:', userId)
+	bot.getUserProfile(userId, function (err, profile) {
+	    console.log('profile:', profile);
+	});
+
 	console.log('User text:', message)
 
   // Send text content to the right Api.ai agent
