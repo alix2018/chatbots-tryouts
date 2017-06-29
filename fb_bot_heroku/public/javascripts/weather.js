@@ -18,14 +18,15 @@ var weatherIcons = {
 axios.get('/datajson')
   .then(function(response) {
     console.log(response.data);
+		/*
     console.log(response.status);
     console.log('city:',response.data.name);
     console.log('weather1:',response.data.weather[0].description);
     console.log('degres:', parseFloat(response.data.main.temp-273.15).toFixed(0));
+		*/
     json = response.data
   });
 
-console.log('dataJson3:', json);
 
 $(document).ready(function() {
   $.simpleWeather({
@@ -34,7 +35,7 @@ $(document).ready(function() {
     unit: 'c',
     success: function(weather) {
       console.log('weather2:',weather);
-      console.log('nb:', weatherIcons[json.weather[0].icon]);
+      //console.log('nb:', weatherIcons[json.weather[0].icon]);
       html = '<h2><i class="icon-'+weatherIcons[json.weather[0].icon]+'"></i> '+ parseFloat(json.main.temp-273.15).toFixed(0)+'&deg;'+weather.units.temp+'</h2>';
       html += '<ul><li>'+json.name+', '+json.sys.country+'</li>';
       html += '<li class="currently">'+json.weather[0].description+'</li>';

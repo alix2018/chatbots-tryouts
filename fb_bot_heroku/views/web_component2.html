@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8" />
+  <title>Card Webview</title>
+  <!--
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+  <link rel="import" href="https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/paper-card/paper-card.html">
+  <link rel="import" href="https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/iron-icon/iron-icon.html">
+  <link rel="import" href="https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="https://cdn.rawgit.com/download/polymer-cdn/1.0.1/lib/paper-button/paper-button.html">
+
+
+    -->
+  <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../bower_components/polymer/polymer.html">
+
+  <link rel="import" href="../bower_components/iron-meta/iron-meta.html">
+  <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="../bower_components/iron-iconset-svg/iron-iconset-svg.html">
+  <link rel="import" href="../bower_components/iron-iconset/iron-iconset.html">
+
+  <link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+  <link rel="import" href="../bower_components/iron-icons/maps-icons.html">
+  <link rel="import" href="../bower_components/iron-icons/social-icons.html">
+  <link rel="import" href="../bower_components/iron-icons/communication-icons.html">
+  <link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+
+  <link rel="import" href="../bower_components/paper-button/paper-button.html">
+  <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+  <link rel="import" href="../bower_components/paper-styles/color.html">
+  <link rel="import" href="../bower_components/paper-styles/typography.html">
+  <link rel="import" href="../bower_components/paper-card/paper-card.html">
+
+  </head>
+  <body>
+
+    <custom-style>
+      <style is="custom-style">
+        body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+        }
+        paper-card {
+      	max-width: 500px;
+        }
+        .cafe-header { @apply --paper-font-headline; }
+        .cafe-light { color: var(--paper-grey-600); }
+        .cafe-location {
+      float: right;
+      font-size: 15px;
+      vertical-align: middle;
+        }
+        .cafe-reserve { color: var(--google-blue-500); }
+        iron-icon.star {
+      --iron-icon-width: 16px;
+      --iron-icon-height: 16px;
+      color: var(--paper-amber-500);
+        }
+        iron-icon.star:last-of-type { color: var(--paper-grey-500); }
+      </style>
+      <custom-style>
+      <paper-card>
+        <div class="card-content">
+          <div class="cafe-header">Cafe Basilico
+            <div class="cafe-location cafe-light">
+              <iron-icon icon="communication:location-on"></iron-icon>
+              <span>250ft</span>
+            </div>
+          </div>
+          <div class="cafe-rating">
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+            <iron-icon class="star" icon="star"></iron-icon>
+          </div>
+          <p>$・Italian, Cafe</p>
+          <p class="cafe-light">Small plates, salads &amp; sandwiches in an intimate setting.</p>
+        </div>
+        <div class="card-actions">
+          <div class="horizontal justified">
+            <paper-icon-button icon="icons:event"></paper-icon-button>
+            <paper-button>5:30PM</paper-button>
+            <paper-button>7:30PM</paper-button>
+            <paper-button>9:00PM</paper-button>
+            <paper-button class="cafe-reserve">Reserve</paper-button>
+          </div>
+        </div>
+      </paper-card>
+      </custom-style></custom-style>
+
+  </body>
+</html>

@@ -33,37 +33,34 @@ app.use(express.static(__dirname));
 
 // Welcome page
 app.get('/', function(req, res) {
-	console.log(req)
   res.send("Welcome")
 });
 
-/*
-app.set('views', './views')
-app.set('view engine', 'pug')
-*/
+app.set('views', './views');
+app.set('view engine', 'pug');
 
-app.get('/test', function (req, res) {
-  res.render('index', { title: 'Hey', message: 'Hello there!' })
-})
+bot.getUserProfile(userId, function (err, profile) {
+    console.log('profile:', profile);
+});
 
 // Display weather pictures
 var weatherIcons = {
-	"01d": url + "/weather_pictures/32.png",
-	"02d": url + "/weather_pictures/30.png",
-	"03d": url + "/weather_pictures/26.png",
-	"04d": url + "/weather_pictures/25.png",
-	"09d": url + "/weather_pictures/11.png",
-	"10d": url + "/weather_pictures/39.png",
-	"11d": url + "/weather_pictures/0.png",
-	"13d": url + "/weather_pictures/13.png",
-	"50d": url + "/weather_pictures/20.png"
+	"01d": url + "/public/images/32.png",
+	"02d": url + "/public/images/30.png",
+	"03d": url + "/public/images/26.png",
+	"04d": url + "/public/images/25.png",
+	"09d": url + "/public/images/11.png",
+	"10d": url + "/public/images/39.png",
+	"11d": url + "/public/images/0.png",
+	"13d": url + "/public/images/13.png",
+	"50d": url + "/public/images/20.png"
 }
 
 // Send a card
 var weatherCard = [
   {
     "title": "Weather",
-    "image_url": url + "/weather/0.png",
+    "image_url": url + "/public/images/0.png",
     "subtitle": "Details about the weather",
     "buttons": [
       {
@@ -78,6 +75,14 @@ var weatherCard = [
 					"messenger_extensions": true,
 					"webview_height_ratio": "compact",
 					"fallback_url": url + "/views/webview.html"
+			},
+			{
+					"type":"web_url",
+					"title":"Card",
+					"url": url + "/views/card",
+					"messenger_extensions": true,
+					"webview_height_ratio": "tall",
+					"fallback_url": url + "/views/card"
 			}
     ]
   }
@@ -95,9 +100,25 @@ var menuButtons = [
     }
 ];
 
+var testCard = [
+  {
+    "title": "Card",
+    "image_url": url + "/public/images/bot.webp",
+    "subtitle": "Webp test",
+    "buttons": [
+      {
+        "type":"web_url",
+        "url": url + "/views/card",
+        "title":"Card example"
+      }
+    ]
+  }
+];
+
 // Setup listener for incoming messages
 bot.on('message', (userId, message) => {
 
+	console.log('user id:', userId)
 	console.log('User text:', message)
 
   // Send text content to the right Api.ai agent
@@ -137,6 +158,16 @@ bot.on('message', (userId, message) => {
 					// Ask for the city and send a location button
 					if (botAnswer.speech == "In which city?") {
 						bot.sendLocationRequest(userId, botAnswer.speech)
+					}
+
+					else if (message == "card") {
+						/*
+						var webp = url + "/test/bot.webp"
+						bot.sendImageMessage(userId, webp,  function(){console.log("ARGS1 ", arguments)})
+						var gif = url + "/test/mario.gif"
+						bot.sendImageMessage(userId, gif,  function(){console.log("ARGS2 ", arguments)})
+						*/
+						bot.sendGenericMessage(userId, testCard, function(){console.log("ARGS2 ", arguments)})
 					}
 
 					// All other answers from the bot
@@ -191,6 +222,11 @@ app.get('/datajson', function(req, res) {
 		res.send(dataJson)
 });
 
+app.get('/views/card', function (req, res) {
+  res.render('card', { id: "http://openweathermap.org/city/"+dataJson.id, city: dataJson.name, country: dataJson.sys.country,weather: dataJson.weather[0].main, details: dataJson.weather[0].description, temperature: parseFloat(dataJson.main.temp-273.15).toFixed(0), image: weatherIcons[dataJson.weather[0].icon] });
+});
+
+
 // Make Express listening
 app.listen(app.get('port'), () => {
   console.log('Started on port', app.get('port'))
@@ -207,7 +243,7 @@ function jsonToCard(userId, json) {
       console.log(json);
 
 			dataJson = json
-			console.log('datajson:', dataJson)
+			//console.log('datajson:', dataJson)
 
 
       // Conversion from Kelvin to Celsius

@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    title Card Webview
+    script(src='../bower_components/webcomponentsjs/webcomponents-lite.js')
+    link(rel='import', href='../bower_components/polymer/polymer.html')
+    link(rel='import', href='../bower_components/iron-meta/iron-meta.html')
+    link(rel='import', href='../bower_components/iron-flex-layout/iron-flex-layout.html')
+    link(rel='import', href='../bower_components/iron-iconset-svg/iron-iconset-svg.html')
+    link(rel='import', href='../bower_components/iron-iconset/iron-iconset.html')
+    link(rel='import', href='../bower_components/iron-icons/iron-icons.html')
+    link(rel='import', href='../bower_components/iron-icons/maps-icons.html')
+    link(rel='import', href='../bower_components/iron-icons/social-icons.html')
+    link(rel='import', href='../bower_components/iron-icons/communication-icons.html')
+    link(rel='import', href='../bower_components/iron-icon/iron-icon.html')
+    link(rel='import', href='../bower_components/paper-button/paper-button.html')
+    link(rel='import', href='../bower_components/paper-icon-button/paper-icon-button.html')
+    link(rel='import', href='../bower_components/paper-styles/color.html')
+    link(rel='import', href='../bower_components/paper-styles/typography.html')
+    link(rel='import', href='../bower_components/paper-card/paper-card.html')
+    link(rel='stylesheet', type='text/css', media= 'screen and (min-device-width:500px)',href='../public/stylesheets/desktop-card.css')
+    link(rel='stylesheet', type='text/css', media= 'screen and (max-device-width:500px)',href='../public/stylesheets/mobile-card.css')
+
+
+  body
+    custom-style
+      custom-style
+        paper-card(image= image)
+          .card-content
+            .cafe-header
+              | Weather in #{city}, #{country}
+            p Current weather: #{weather}
+            p.cafe-light #{details} with a temperature of #{temperature} °C
+          .card-actions
+            a(href= id)
+              paper-button.cafe-reserve Website
