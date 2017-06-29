@@ -1,9 +1,0 @@
-# OS files
-.DS_Store
-
-# Node_modules folders
-node_modules/
-
-# Unwanted files
-data.txt
-polymer-20-test/
