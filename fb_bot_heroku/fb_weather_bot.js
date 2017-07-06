@@ -3,6 +3,8 @@ const FBBotFramework = require('fb-bot-framework');
 const apiai = require('apiai');
 const fetch = require('node-fetch');
 const path = require('path');
+const FB = require('fb');
+
 
 // Initialization
 const app = express();
@@ -18,6 +20,7 @@ var botAnswer = new String()
 var count = 0
 var dataJson = {}
 var temperature, latitude, longitude
+var urlUserId = new String()
 var url = "https://immense-tor-25991.herokuapp.com"
 //var url ="https://localhost:5000"
 
@@ -116,9 +119,12 @@ var testCard = [
 bot.on('message', (userId, message) => {
 
 	console.log('user id:', userId)
+
+	/*
 	bot.getUserProfile(userId, function (err, profile) {
 	    console.log('profile:', profile);
 	});
+	*/
 
 	console.log('User text:', message)
 
@@ -169,6 +175,23 @@ bot.on('message', (userId, message) => {
 						bot.sendImageMessage(userId, gif,  function(){console.log("ARGS2 ", arguments)})
 						*/
 						bot.sendGenericMessage(userId, testCard, function(){console.log("ARGS2 ", arguments)})
+					}
+
+					else if (message == "info") {
+						FB.setAccessToken("EAALdLyoY5iMBAIddmLh6kHpNJ6bZBZAZC1GmUItFPoHYZCmMagOzZAR4BCdCgaSfD6ssG7JyZALculLa4wvnEU3WXto0hoWhknvT5O7WCpZCOlbFdbZAAHoauKgz4HF0bKmkbDLlUl16y40ZBpu0dxMPHGOGckzK3hCH62zMSZAuEw5gZDZD");
+
+						urlUserId = "/" + userId;
+
+						FB.api(urlUserId, function (res) {
+						  if(!res || res.error) {
+						   console.log(!res ? 'error occurred' : res.error);
+						   return;
+						  }
+						  console.log('res:',res);
+							reply = "Your name is " + res.first_name + " " + res.last_name + " and you are a " + res.gender + "."
+							bot.sendTextMessage(userId, reply)
+							bot.sendImageMessage(userId, res.profile_pic)
+						});
 					}
 
 					// All other answers from the bot
