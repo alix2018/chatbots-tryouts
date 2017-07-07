@@ -71,7 +71,7 @@ node app.js
 Bot weather: <br>
 A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [Openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data. <br>
 
-_Telegram bot_ <br>
+_Telegram bot:_ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Telegraf. <br>
 \- Directory : api_bot <br>
 \- Telegram Bot name: \@StephApiAiBot <br>
@@ -85,7 +85,7 @@ node telegram_weather_bot.js
 ```
 
 
-_Facebook bot_ <br>
+_Facebook bot:_ <br>
 On Heroku <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the FB Bot Framework. <br>
 \- Facebook Messenger Bot page: https://www.facebook.com/StephChatbot <br>
@@ -93,7 +93,7 @@ The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the
 \- Domain name: [immense-tor-25991](https://immense-tor-25991.herokuapp.com/) <br>
 \- You can talk to the Facebook bot, everything is already configured <br>
 
-_WeChat bot_ <br>
+_WeChat bot:_ <br>
 With the Node.js Bot Framework [Wechaty](https://github.com/Chatie/wechaty) and the same Api.ai agent. <br>
 \- Directory : api_bot <br>
 \- Packages installation:
@@ -104,6 +104,6 @@ npm install
 ```
 node wechaty_weather_bot.js
 ```
-\- Scan the QR code with the Wechat bot account (the QR appear in a new google chrome window and in the terminal) <br>
+\- Scan the QR code with the Wechat bot account (the QR code appears in a new google chrome window and in the terminal) <br>
 \- Confirm login to Web Wechat on the mobile <br>
 \- Talk to the bot with your Wechat account <br>
