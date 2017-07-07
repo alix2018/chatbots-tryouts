@@ -85,8 +85,8 @@ node telegram_weather_bot.js
 ```
 
 
-_Facebook bot:_ <br>
-On Heroku <br>
+_Facebook bot:_ (On Heroku) <br>
+ <br>
 The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the FB Bot Framework. <br>
 \- Facebook Messenger Bot page: https://www.facebook.com/StephChatbot <br>
 \- I deployed my app on Heroku <br>
