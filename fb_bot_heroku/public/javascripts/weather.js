@@ -18,13 +18,13 @@ var weatherIcons = {
 axios.get('/datajson')
   .then(function(response) {
     console.log(response.data);
+    json = response.data;
 		/*
-    console.log(response.status);
-    console.log('city:',response.data.name);
-    console.log('weather1:',response.data.weather[0].description);
-    console.log('degres:', parseFloat(response.data.main.temp-273.15).toFixed(0));
+		console.log(response.status);
+		console.log('city:',response.data.name);
+		console.log('weather1:',response.data.weather[0].description);
+		console.log('degres:', parseFloat(response.data.main.temp-273.15).toFixed(0));
 		*/
-    json = response.data
   });
 
 

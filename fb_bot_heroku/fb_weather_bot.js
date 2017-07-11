@@ -2,7 +2,6 @@ const express = require('express');
 const FBBotFramework = require('fb-bot-framework');
 const apiai = require('apiai');
 const fetch = require('node-fetch');
-const path = require('path');
 const FB = require('fb');
 
 

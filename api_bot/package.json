@@ -8,6 +8,7 @@
     "node-fetch": "^1.7.1",
     "qrcode-terminal": "^0.11.0",
     "telegraf": "^3.7.4",
+    "wechat-mp": "^0.2.7",
     "wechaty": "^0.8.129"
   },
   "devDependencies": {},

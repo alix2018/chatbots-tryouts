@@ -1,17 +1,35 @@
-const { Wechaty } = require('wechaty')
+const { Wechaty, MediaMessage } = require('wechaty')
 const apiai = require('apiai')
 const fetch = require('node-fetch')
 const QRcode = require('qrcode-terminal')
+//const mp = require('wechat-mp')("gh_40e5934726cd")
+const exp = require('express')()
 
 const bot = Wechaty.instance()
 const app = apiai("291ec8ecde384312a9c7190faae3761f");
 
 var reply = new String()
+var weatherURL = new String()
 var jsonURL = new String()
 var count = 0
 var temperature
 var botuser
 
+///wechat/webhooks/595a3bfafce0d25100d2324f
+/*
+exp.use('/wechat/webhooks/595a3bfafce0d25100d2324f', mp.start())
+exp.post('/wechat/webhooks/595a3bfafce0d25100d2324f', function(req, res, next) {
+
+  console.log(req.body)
+
+  res.body = {
+    msgType: 'text',
+    content: 'Hi.'
+  }
+
+  next()
+}, mp.end())
+*/
 
 bot.on('scan', (url, code) => {
   let loginUrl = url.replace('qrcode', 'l')
@@ -38,11 +56,14 @@ bot.on('message', (m) => {
     // Reset the count each new message from the bot (in the case the bot sends several answers)
     count = 0
 
+
     /*
     if (m == "Hi") {
         m.say("Hello! How are you?")
     }
     */
+
+
     if (contact != botUser) {
 
       // Api.ai agent answers
@@ -53,14 +74,16 @@ bot.on('message', (m) => {
         // We scan the answers array from api.ai, just Api.ai default or telegram responses
         while (count < response.result.fulfillment.messages.length) {
 
-          if ( (response.result.fulfillment.messages[count].platform == undefined) ||
-               (response.result.fulfillment.messages[count].platform == "telegram") ) {
-            console.log('platform:', response.result.fulfillment.messages[count].platform)
+          var botAnswer = response.result.fulfillment.messages[count]
+
+          if ( (botAnswer.platform == undefined) ||
+               (botAnswer.platform == "telegram") ) {
+            console.log('platform:', botAnswer.platform)
 
             // If the answer is a custom payload (type = 4)
-            if ((response.result.fulfillment.messages[count].type == 4)) {
-              console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
-              json = response.result.fulfillment.messages[count].payload.telegram.text
+            if ((botAnswer.type == 4)) {
+              console.log('answer:', botAnswer.payload.telegram.text)
+              json = botAnswer.payload.telegram.text
 
               // Retrieve the weather JSON file from the url
               fetch(json)
@@ -80,11 +103,18 @@ bot.on('message', (m) => {
             }
 
             // If the answer is a text response (type = 0)
-            else if (response.result.fulfillment.messages[count].type == 0) {
+            else if (botAnswer.type == 0) {
 
-              console.log('bot text:', response.result.fulfillment.messages[count].speech)
-              reply = response.result.fulfillment.messages[count].speech
-              m.say(reply)
+              console.log('bot text:', botAnswer.speech)
+
+              if (content == "image") {
+                m.say(new MediaMessage('donuts.png'))
+              }
+
+              else {
+                reply = botAnswer.speech
+                m.say(reply)
+              }
             }
           }
         // Next bot answer

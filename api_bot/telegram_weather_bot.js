@@ -1,15 +1,28 @@
+const express = require('express');
 const apiai = require('apiai');
 const Telegraf = require('telegraf')
 const fetch = require('node-fetch');
 
 const app = apiai("291ec8ecde384312a9c7190faae3761f");
 const bot = new Telegraf("329701042:AAH42GHypX8HNbhYN_PVWtsyzHE_AO2M-Hs")
+const exp = express();
 
 var reply = new String()
 var jsonURL = new String()
 var count = 0
 var temperature
+var botAnswer
 
+
+// Set the right port
+exp.set('port', (process.env.PORT || 5000));
+
+exp.use(express.static(__dirname));
+
+// Welcome page
+exp.get('/', function(req, res) {
+  res.send("Welcome")
+});
 
 // When the user writes a message, the event "message" is triggered
 bot.on('message', (ctx) => {
@@ -33,14 +46,15 @@ bot.on('message', (ctx) => {
 
     // We scan the answers array from api.ai, just Api.ai default or telegram responses
     while (count < response.result.fulfillment.messages.length) {
+      botAnswer = response.result.fulfillment.messages[count]
 
-      if ( (response.result.fulfillment.messages[count].platform == undefined) ||
-           (response.result.fulfillment.messages[count].platform == "telegram") ) {
+      if ( (botAnswer.platform == undefined) ||
+           (botAnswer.platform == "telegram") ) {
         console.log('platform:', response.result.fulfillment.messages[count].platform)
         // If the answer is a custom payload (type = 4)
-        if ((response.result.fulfillment.messages[count].type == 4)) {
-          console.log('answer:', response.result.fulfillment.messages[count].payload.telegram.text)
-          json = response.result.fulfillment.messages[count].payload.telegram.text
+        if ((botAnswer.type == 4)) {
+          console.log('answer:', botAnswer.payload.telegram.text)
+          json = botAnswer.payload.telegram.text
 
           // Retrieve the weather JSON file from the url
           fetch(json)
@@ -60,11 +74,13 @@ bot.on('message', (ctx) => {
         }
 
         // If the answer is a text response (type = 0)
-        else if (response.result.fulfillment.messages[count].type == 0) {
+        else if (botAnswer.type == 0) {
 
-          console.log('bot text:', response.result.fulfillment.messages[count].speech)
-          reply = response.result.fulfillment.messages[count].speech
+          console.log('bot text:', botAnswer.speech)
+          reply = botAnswer.speech
           ctx.reply(reply)
+          ctx.replyWithPhoto({ url: 'https://www.google.nl/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwifttCc4P7UAhWhAJoKHVnTCzoQjRwIBw&url=http%3A%2F%2Ffr.freepik.com%2Ficones-gratuites%2Flogo&psig=AFQjCNF-fNN0wczSEYDmOQ6KebVxc0ev1w&ust=1499777369327503'})
+
         }
       }
     // Next bot answer
@@ -83,3 +99,8 @@ bot.on('message', (ctx) => {
 })
 
 bot.startPolling()
+
+// Make Express listening
+exp.listen(exp.get('port'), () => {
+  console.log('Started on port', exp.get('port'))
+})
