@@ -1,0 +1,28 @@
+{
+  "name": "telegram_bot_heroku",
+  "description": "",
+  "main": "telegram_weather_bot.js",
+  "authors": [
+    "alix2018"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "iron-flex-layout": "^2.0.0",
+    "iron-iconset-svg": "^2.0.0",
+    "iron-iconset": "^2.0.0",
+    "iron-icons": "^2.0.1",
+    "iron-icon": "^2.0.0",
+    "paper-button": "^2.0.0",
+    "paper-icon-button": "^2.0.0",
+    "paper-styles": "^2.0.0",
+    "paper-card": "PolymerElements/paper-card#^2.0.0"
+  }
+}

@@ -265,8 +265,8 @@ function jsonToCard(userId, json) {
     }).then( (json) => {
       console.log(json);
 
-			dataJson = json
-			//console.log('datajson:', dataJson)
+	dataJson = json
+	//console.log('datajson:', dataJson)
 
 
       // Conversion from Kelvin to Celsius

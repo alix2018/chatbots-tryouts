@@ -1,0 +1,22 @@
+{
+  "name": "telegram_bot_heroku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "telegram_weather_bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "alix2018",
+  "license": "ISC",
+  "dependencies": {
+    "apiai": "^4.0.3",
+    "axios": "^0.16.2",
+    "express": "^4.15.3",
+    "jquery": "^3.2.1",
+    "node-botmetrics": "^1.0.0",
+    "node-fetch": "^1.7.1",
+    "node-schedule": "^1.2.3",
+    "pug": "^2.0.0-rc.2",
+    "telegraf": "^3.8.0"
+  }
+}

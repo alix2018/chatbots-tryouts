@@ -72,7 +72,7 @@ Bot weather: <br>
 A bot with a smart conversation for basic sentences. There is a trained agent on my [Api.ai](https://api.ai) account which can give the weather because it detects the context (*the weather*) and the keyword (*the city*). If you don't write the city it'll ask you the question. I used the weather API [Openweathermap](http://openweathermap.org) to retrieve a JSON with all the weather data. <br>
 
 _Telegram bot:_ <br>
-The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Telegraf. <br>
+The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and Telegraf. Just simple sentences. <br>
 \- Directory : api_bot <br>
 \- Telegram Bot name: \@StephApiAiBot <br>
 \- Packages installation:
@@ -84,14 +84,23 @@ npm install
 node telegram_weather_bot.js
 ```
 
+On Heroku: <br>
+Same bot as above but with weather pictures, details, buttons and webviews. <br>
+\- Directory : telegram_bot_heroku <br>
+\- Telegram Bot name: \@StephApiAiBot <br>
+\- Domain name: [guarded-shore-50472](https://guarded-shore-50472.herokuapp.com/) <br>
+\- You can talk to the Telegram bot, everything is already configured <br>
+
 
 _Facebook bot:_ (On Heroku) <br>
  <br>
-The Api.ai agent is bind with the telegram bot thanks to the Node.js SDK and the FB Bot Framework. <br>
+The Api.ai agent is bind with the Facebook Messenger bot thanks to the Node.js SDK and the FB Bot Framework. <br>
+\- Directory : facebook_bot_heroku <br>
 \- Facebook Messenger Bot page: https://www.facebook.com/StephChatbot <br>
 \- I deployed my app on Heroku <br>
 \- Domain name: [immense-tor-25991](https://immense-tor-25991.herokuapp.com/) <br>
 \- You can talk to the Facebook bot, everything is already configured <br>
+
 
 _WeChat bot:_ <br>
 With the Node.js Bot Framework [Wechaty](https://github.com/Chatie/wechaty) and the same Api.ai agent. <br>

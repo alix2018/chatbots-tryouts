@@ -1,0 +1,13 @@
+# OS files
+.DS_Store
+
+# Node_modules folders
+node_modules/
+
+# Unwanted files
+data.txt
+polymer-20-test/
+views/card.html
+views/web_component.html
+views/web_component2.html
+views/AMP_webview.html
