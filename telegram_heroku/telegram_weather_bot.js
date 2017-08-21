@@ -25,7 +25,7 @@ var lastAnswer
 var notify
 var jobJson = {}
 
-var url = "https://guarded-shore-50472.herokuapp.com"
+var url = "https://boiling-atoll-23559.herokuapp.com"
 
 
 // Display weather pictures
